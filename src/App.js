@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+import AgregarCategoria from './componentes/AgregarCategoria';
+import GiftGrid from './componentes/GiftGrid';
+
+const App = () => {
+
+  const [ categorias, setCategorias ] = useState(['Skrillex']);
+
+  const AgregaCategoria = ( newcategoria) => {
+
+    // Validamos si el dato ya existe en el arreglo.
+      // Includes se utiliza para verificar si un elemento se encuentra dentro de un array o una cadena de texto. Es parecido a FIND
+      
+    if (categorias.includes(newcategoria)) return;
+
+    setCategorias([newcategoria, ...categorias]);
+  }
+  
+  return ( 
+    <div className='container'>
+
+      <div className='row mt-4'>
+        <div className='col-12'>
+          <h1>GiftExpertApp</h1>
+        </div>
+      </div>
+
+      <AgregarCategoria nuevaCategoria = { (value) => AgregaCategoria(value) } />
+
+      
+      { categorias.map((categoria, index) => (
+          <GiftGrid key={ index } categoria={ categoria }/>
+        ))
+      }
+      
     </div>
   );
 }
